@@ -21,7 +21,7 @@ def run():
         page_icon="📧",
     )
 
-    st.title("RuchAI - Your Email Mom")
+    st.title("RuchAI - Inboxes made tolerable.")
 
     st.sidebar.info("Enter the body of an email and get its analysis.")
 
