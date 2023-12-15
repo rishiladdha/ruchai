@@ -17,11 +17,11 @@ def send_email_for_analysis(email_body):
 
 def run():
     st.set_page_config(
-        page_title="Email Analysis Tool",
+        page_title="RuchAIl",
         page_icon="📧",
     )
 
-    st.title("Email Analysis Tool")
+    st.title("RuchAI - Your Email Mom")
 
     st.sidebar.info("Enter the body of an email and get its analysis.")
 
@@ -46,8 +46,7 @@ def run():
 
     st.markdown(
         """
-        **Streamlit App for Email Analysis**  
-        This tool analyzes the content of emails and classifies them based on urgency.
+        Made with <3 at Plaksha University.
         """
     )
 
