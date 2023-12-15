@@ -1,51 +1,55 @@
-# Copyright (c) Streamlit Inc. (2018-2022) Snowflake Inc. (2022)
-#
-# Licensed under the Apache License, Version 2.0 (the "License");
-# you may not use this file except in compliance with the License.
-# You may obtain a copy of the License at
-#
-#     http://www.apache.org/licenses/LICENSE-2.0
-#
-# Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on an "AS IS" BASIS,
-# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-# See the License for the specific language governing permissions and
-# limitations under the License.
-
 import streamlit as st
 from streamlit.logger import get_logger
+import requests
 
 LOGGER = get_logger(__name__)
 
+def send_email_for_analysis(email_body):
+    response = requests.post(
+        'YOUR_API_ENDPOINT',  # Replace with your API endpoint
+        json={"email_body": email_body}
+    )
+    if response.status_code == 200:
+        return response.json()
+    else:
+        st.error("Error from API: " + response.text)
+        return None
 
 def run():
     st.set_page_config(
-        page_title="Hello",
-        page_icon="👋",
+        page_title="Email Analysis Tool",
+        page_icon="📧",
     )
 
-    st.write("# Welcome to Streamlit! 👋")
+    st.title("Email Analysis Tool")
 
-    st.sidebar.success("Select a demo above.")
+    st.sidebar.info("Enter the body of an email and get its analysis.")
+
+    email_body = st.text_area("Enter the body of the email:", height=300)
+
+    if st.button('Analyze Email'):
+        if email_body:
+            result = send_email_for_analysis(email_body)
+            if result:
+                st.subheader("Summary:")
+                st.write(result.get("summary"))
+
+                predicted_class = result.get("predicted_class")
+                if predicted_class == 0:
+                    st.markdown("<h2 style='color: red;'>Urgent</h2>", unsafe_allow_html=True)
+                elif predicted_class == 1:
+                    st.markdown("<h2 style='color: yellow;'>Moderate</h2>", unsafe_allow_html=True)
+                elif predicted_class == 2:
+                    st.markdown("<h2 style='color: green;'>Low</h2>", unsafe_allow_html=True)
+        else:
+            st.warning("Please enter the email body to analyze.")
 
     st.markdown(
         """
-        Streamlit is an open-source app framework built specifically for
-        Machine Learning and Data Science projects.
-        **👈 Select a demo from the sidebar** to see some examples
-        of what Streamlit can do!
-        ### Want to learn more?
-        - Check out [streamlit.io](https://streamlit.io)
-        - Jump into our [documentation](https://docs.streamlit.io)
-        - Ask a question in our [community
-          forums](https://discuss.streamlit.io)
-        ### See more complex demos
-        - Use a neural net to [analyze the Udacity Self-driving Car Image
-          Dataset](https://github.com/streamlit/demo-self-driving)
-        - Explore a [New York City rideshare dataset](https://github.com/streamlit/demo-uber-nyc-pickups)
-    """
+        **Streamlit App for Email Analysis**  
+        This tool analyzes the content of emails and classifies them based on urgency.
+        """
     )
-
 
 if __name__ == "__main__":
     run()
