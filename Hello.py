@@ -6,7 +6,7 @@ LOGGER = get_logger(__name__)
 
 def send_email_for_analysis(email_body):
     response = requests.post(
-        'YOUR_API_ENDPOINT',  # Replace with your API endpoint
+        'https://ruchai-ansjhewkia-el.a.run.app/predict',  # Replace with your API endpoint
         json={"email_body": email_body}
     )
     if response.status_code == 200:
