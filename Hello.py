@@ -38,7 +38,7 @@ def run():
                 if predicted_class == 0:
                     st.markdown("<h2 style='color: red;'>Urgent</h2>", unsafe_allow_html=True)
                 elif predicted_class == 1:
-                    st.markdown("<h2 style='color: yellow;'>Moderate</h2>", unsafe_allow_html=True)
+                    st.markdown("<h2 style='color: orange;'>Moderate</h2>", unsafe_allow_html=True)
                 elif predicted_class == 2:
                     st.markdown("<h2 style='color: green;'>Low</h2>", unsafe_allow_html=True)
         else:
